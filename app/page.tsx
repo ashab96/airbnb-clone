@@ -18,6 +18,7 @@ const Home = async ({ searchParams }: HomeProps) => {
   if (listings.length === 0) {
     return <EmptyState showReset />;
   }
+  // throw new Error("something went wrong");
   return (
     <Container>
       <div
