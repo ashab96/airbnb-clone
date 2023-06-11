@@ -11,9 +11,11 @@ import Input from "../inputs/Input";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
 import { signIn } from "next-auth/react";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -32,7 +34,9 @@ const RegisterModal = () => {
     axios
       .post("/api/register", data)
       .then(() => {
+        toast.success("Suceess");
         registerModal.onClose();
+        loginModal.onOpen();
       })
       .catch((error) => {
         toast.error("Something Went Wrong");
@@ -44,6 +48,11 @@ const RegisterModal = () => {
   async function handleGithubSignin() {
     await signIn("github", { callbackUrl: "http://localhost:3000" });
   }
+  const onToggle = useCallback(() => {
+    registerModal.onClose();
+    loginModal.onOpen();
+  }, [registerModal, loginModal]);
+
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading title="Welcome to Airbnb" subtitle="create an account" />
@@ -101,7 +110,7 @@ const RegisterModal = () => {
         <div className="justify-center flex flex-row items-center gap-2">
           <div> Already have an account?</div>
           <div
-            onClick={registerModal.onClose}
+            onClick={onToggle}
             className="
               text-neutral-800
               cursor-pointer 

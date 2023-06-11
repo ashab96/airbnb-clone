@@ -30,6 +30,8 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const [showModal, setShowModal] = useState(isOpen);
 
+  //console.log("inside modal actionlabel", actionLabel);
+
   useEffect(() => {
     setShowModal(isOpen);
   }, [isOpen]);
@@ -48,6 +50,7 @@ const Modal: React.FC<ModalProps> = ({
     if (disabled) {
       return;
     }
+    //console.log("inside handleSubmit");
     onSubmit();
   }, [disabled, onSubmit]);
 
